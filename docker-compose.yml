@@ -20,17 +20,11 @@ services:
     depends_on:
       - pact-db
     environment:
-      PACT_BROKER_DATABASE_URL: postgres://pactbroker:supersecret@pact-db/pactbroker
+      PACT_BROKER_DATABASE_URL: postgres://pactbroker:supersecret@pact-db:5432/pactbroker
     ports:
       - "9292:9292"
     restart: unless-stopped
-
-  pact-verifier:
-    image: pactfoundation/pact-cli
-    volumes:
-      - ./pacts:/pacts
-    networks:
-      - pact-network
+    
 networks:
   pact-network:
     driver: bridge
