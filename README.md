@@ -9,7 +9,7 @@
   
 **Verify Providers**
 - docker run --rm pactfoundation/pact-cli pact-provider-verifier \
-  --provider "providername" --provider-base-url=http://host.docker.internal:5000 \
+  --provider "provider name" --provider-base-url='url of provider' \
   --pact-broker-base-url=http://host.docker.internal:9292 \
   --publish-verification-results --provider-app-version=1.0.0
   
