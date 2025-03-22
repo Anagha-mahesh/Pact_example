@@ -1,20 +1,20 @@
-## **Pact Testing with Consumers and Providers**
+# **Pact Testing with Consumers and Providers**
 
 **Start Broker and Database**
-docker-compose up -d
+- docker-compose up -d
 
 **Publish Pacts**
-docker run --rm -v $(pwd)/pacts:/pacts pactfoundation/pact-cli \
+- docker run --rm -v $(pwd)/pacts:/pacts pactfoundation/pact-cli \
   publish /pacts --consumer-app-version 1.0.0 --broker-base-url http://host.docker.internal:9292
   
 **Verify Providers**
-docker run --rm pactfoundation/pact-cli pact-provider-verifier \
+- docker run --rm pactfoundation/pact-cli pact-provider-verifier \
   --provider "providername" --provider-base-url=http://host.docker.internal:5000 \
   --pact-broker-base-url=http://host.docker.internal:9292 \
   --publish-verification-results --provider-app-version=1.0.0
   
 **Stop Services**
-docker-compose down
+- docker-compose down
 
 **Access Pact Broker**
 - URL: http://localhost:9292
