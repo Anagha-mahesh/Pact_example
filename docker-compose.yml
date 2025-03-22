@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  pact-db:
+    image: postgres
+    container_name: pact-db
+    networks:
+      - pact-network
+    environment:
+      POSTGRES_USER: pactbroker
+      POSTGRES_PASSWORD: supersecret
+      POSTGRES_DB: pactbroker
+    restart: unless-stopped
+
+  pact-broker:
+    image: pactfoundation/pact-broker
+    container_name: pact-broker
+    networks:
+      - pact-network
+    depends_on:
+      - pact-db
+    environment:
+      PACT_BROKER_DATABASE_URL: postgres://pactbroker:supersecret@pact-db/pactbroker
+    ports:
+      - "9292:9292"
+    restart: unless-stopped
+
+  pact-verifier:
+    image: pactfoundation/pact-cli
+    volumes:
+      - ./pacts:/pacts
+    networks:
+      - pact-network
+networks:
+  pact-network:
+    driver: bridge
